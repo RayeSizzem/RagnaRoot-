@@ -1,0 +1,11 @@
+YGGDRASIL BASE — setup
+======================
+
+No autoloads to register. GameState and ResourceBank now live as nodes inside
+main.tscn, so you only need to set the main scene:
+
+1. Extract scenes/ and scripts/ into H:\Godotgame\yggdrasil\ (overwrite the old files).
+2. Press F5. When prompted for a main scene, pick: res://scenes/main.tscn
+   (or set Project > Project Settings > Application > Run > Main Scene.)
+
+That's it.
