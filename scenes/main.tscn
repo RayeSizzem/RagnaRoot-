@@ -1,0 +1,109 @@
+[gd_scene load_steps=22 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/world_tree.tscn" id="1"]
+[ext_resource type="Script" path="res://scripts/debug_hud.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/tide_manager.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/autoload/game_state.gd" id="4"]
+[ext_resource type="Script" path="res://scripts/autoload/resource_manager.gd" id="5"]
+[ext_resource type="PackedScene" path="res://scenes/camera_rig.tscn" id="6"]
+[ext_resource type="Script" path="res://scripts/build_system.gd" id="7"]
+[ext_resource type="Script" path="res://scripts/build_menu.gd" id="9"]
+[ext_resource type="Script" path="res://scripts/selection_ui.gd" id="11"]
+[ext_resource type="Script" path="res://scripts/world_manager.gd" id="12"]
+[ext_resource type="Script" path="res://scripts/tree_menu.gd" id="13"]
+[ext_resource type="Script" path="res://scripts/cheat_menu.gd" id="14"]
+[ext_resource type="Script" path="res://scripts/attraction_manager.gd" id="15"]
+[ext_resource type="Script" path="res://scripts/game_menu.gd" id="16"]
+[ext_resource type="Script" path="res://scripts/range_indicator.gd" id="17"]
+[ext_resource type="Script" path="res://scripts/spawn_indicator.gd" id="18"]
+[ext_resource type="Script" path="res://scripts/people_menu.gd" id="19"]
+[ext_resource type="Script" path="res://scripts/day_night.gd" id="20"]
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 1
+background_color = Color(0.1, 0.11, 0.14, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.82, 0.86, 0.93, 1)
+ambient_light_energy = 1.25
+tonemap_mode = 2
+ssao_enabled = true
+ssao_radius = 1.4
+ssao_intensity = 1.0
+ssao_power = 1.2
+
+[sub_resource type="PlaneMesh" id="Plane"]
+size = Vector2(630, 630)
+
+[sub_resource type="StandardMaterial3D" id="Mat"]
+albedo_color = Color(0.18, 0.27, 0.16, 1)
+
+[node name="Main" type="Node3D"]
+
+[node name="GameState" type="Node" parent="."]
+script = ExtResource("4")
+
+[node name="ResourceBank" type="Node" parent="."]
+script = ExtResource("5")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.34, 0.94, 0, -0.94, 0.34, 0, 12, 0)
+light_color = Color(0.93, 0.94, 0.98, 1)
+light_energy = 0.95
+shadow_enabled = true
+shadow_blur = 2.0
+shadow_opacity = 0.55
+light_angular_distance = 4.0
+directional_shadow_max_distance = 200.0
+
+[node name="CameraRig" parent="." instance=ExtResource("6")]
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("Plane")
+material_override = SubResource("Mat")
+
+[node name="WorldTree" parent="." instance=ExtResource("1")]
+
+[node name="WorldManager" type="Node3D" parent="."]
+script = ExtResource("12")
+
+[node name="DayNight" type="Node" parent="."]
+script = ExtResource("20")
+
+[node name="BuildSystem" type="Node3D" parent="."]
+script = ExtResource("7")
+
+[node name="TideManager" type="Node" parent="."]
+script = ExtResource("3")
+
+[node name="AttractionManager" type="Node" parent="."]
+script = ExtResource("15")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("2")
+
+[node name="BuildMenu" type="CanvasLayer" parent="."]
+script = ExtResource("9")
+
+[node name="SelectionUI" type="CanvasLayer" parent="."]
+script = ExtResource("11")
+
+[node name="TreeMenu" type="CanvasLayer" parent="."]
+script = ExtResource("13")
+
+[node name="CheatMenu" type="CanvasLayer" parent="."]
+script = ExtResource("14")
+
+[node name="GameMenu" type="CanvasLayer" parent="."]
+script = ExtResource("16")
+
+[node name="RangeIndicator" type="Node3D" parent="."]
+script = ExtResource("17")
+
+[node name="SpawnIndicator" type="Node3D" parent="."]
+script = ExtResource("18")
+
+[node name="PeopleMenu" type="CanvasLayer" parent="."]
+script = ExtResource("19")
